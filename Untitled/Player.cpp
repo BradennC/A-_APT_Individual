@@ -78,7 +78,31 @@ LinkedList *Player::getPlayerHand() {
 
 void Player::printAllTiles() {
     for(int i = 0; i < this->getPlayerHand()->size(); ++i){
-        std::cout << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape;
+        char colour = this->getPlayerHand()->get(i)->colour;
+        if (colour == 'R')
+        {
+            std::cout << "\u001b[41m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m";
+        }
+        if (colour == 'B')
+        {
+            std::cout << "\u001b[44m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m";
+        }
+        if (colour == 'Y')
+        {
+            std::cout << "\u001b[43m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m";
+        }
+        if (colour == 'G')
+        {
+            std::cout << "\u001b[42m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m";
+        }
+        if (colour == 'O')//Try find a more orange colour
+        {
+            std::cout << "\u001b[43;1m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m";
+        }
+        if (colour == 'P')
+        {
+           std::cout << "\e[45m" << this->getPlayerHand()->get(i)->colour << this->getPlayerHand()->get(i)->shape << "\u001b[0m"; 
+        }
         // comma seperator helps readability in terminal
         if(i != this->getPlayerHand()->size() - 1){
             std::cout << ",";

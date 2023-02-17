@@ -526,10 +526,7 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                             this->activePlayer->setPlayerScore(1);
                                         }
 
-                                        if (i == numOfTilesPlaced)
-                                        {
-                                            re->scoreMove(move);
-                                        }
+                                        re->scoreMove(move);
                                         //apply to move - and track the relevant point increases
                                         re->applyMove(move, this->activePlayer);
                                         std::cout << "Move applied" << std::endl;

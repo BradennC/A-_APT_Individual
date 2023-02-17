@@ -39,6 +39,7 @@ private:
     int moveNumber;
 
 public:
+    void helpMethod();
     /**
      * @brief Constructor
      *

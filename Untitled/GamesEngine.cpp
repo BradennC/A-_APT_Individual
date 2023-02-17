@@ -188,6 +188,15 @@ void GamesEngine::playerTurn(Player* activePlayer){
                 commandWords.push_back(word);
             }
 
+            if (commandWords.size() == 1)
+            {
+                if (commandWords[0] == "help")
+                {
+                    helpMethod();
+                    validCommand = true;
+                }
+            }
+
             // All valid commands (except 'quit') are either 2 or 4 words long. 
             // All other input gets 'invalid command' message.                
             if(commandWords.size() == 2)
@@ -538,7 +547,7 @@ void GamesEngine::playerTurn(Player* activePlayer){
 
                         if (tileBag->tiles->size() >= 1) {
 
-                                    this->activePlayer->drawTiles(tileBag, 1);
+                                    this->activePlayer->drawTiles(tileBag, numOfTilesPlaced);
                                 }
 
                                 
@@ -993,4 +1002,24 @@ Player *GamesEngine::getCurrentPlayer() {
 
 Tile* GamesEngine::getTileAt(int row, int column) {
     return this->board[row][column];
+}
+
+void GamesEngine::helpMethod() 
+{
+    std::cout << "\n To place tile:" << std::endl;;
+    std::cout << "place (your tile) at (board coordinate) e.g. place B4 at A1 \n" << std::endl;
+
+    std::cout << "To replace tile:" << std::endl;;
+    std::cout << "replace (your tile) e.g. replace R5 \n" << std::endl;
+
+    std::cout << "To place multiple tiles enter tiles to be place between 'multiplace' and 'at':" << std::endl;;
+    std::cout << "multiplace (your tile) (another tile) at (board coordinate) (board coordinate)" << std::endl;
+    std::cout << "e.g multiplace B5 R5 at X4 X3 or multiplace B5 R5 Y5 at X3 X4 X5 \n" << std::endl;
+
+    std::cout << "To save game:" << std::endl;;
+    std::cout << "save (gameName) e.g. save myGame.save \n" << std::endl;
+
+    std::cout << "To quit:" << std::endl;;
+    std::cout << "quit or ^D \n" << std::endl;
+
 }

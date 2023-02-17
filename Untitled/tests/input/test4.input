@@ -1,0 +1,10 @@
+2
+tests/load_games/new_game.load
+place O3 at N12
+place B3 at N11
+place O5 at O12
+save tests/actual_saved_games/test4.save
+place O1 at P12
+replace R4
+replace B6
+save tests/actual_saved_games/test4.save

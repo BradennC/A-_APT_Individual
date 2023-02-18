@@ -949,7 +949,24 @@ void GamesEngine::printBoard() {
             if (board[row][col] == nullptr) {
                 std::cout << "  |";
             } else {
-                std::cout << board[row][col]->colour << board[row][col]->shape << "|";
+                if (board[row][col]->colour == 'B'){
+                    std::cout << "\u001b[44m" << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
+                if (board[row][col]->colour == 'R'){
+                    std::cout << "\u001b[41m"  << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
+                if (board[row][col]->colour == 'G'){
+                    std::cout << "\u001b[42m" << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
+                if (board[row][col]->colour == 'Y'){
+                    std::cout << "\u001b[43m"  << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
+                if (board[row][col]->colour == 'P'){
+                    std::cout << "\e[45m"  << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
+                if (board[row][col]->colour == 'O'){
+                    std::cout << "\u001b[43m"  << board[row][col]->colour << board[row][col]->shape << "\u001b[0m" << "|";
+                }
             }
         }
         std::cout << std::endl;

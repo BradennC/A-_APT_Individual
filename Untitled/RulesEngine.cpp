@@ -1,10 +1,12 @@
 #include <iostream>
 #include <cassert>
+#include <set>
 #include "BoardLocation.h"
 #include "LinkedList.h"
 #include "RulesEngine.h"
 #include "Player.h"
 #include "TileBag.h"
+
 
 RulesEngine::RulesEngine() {}
 
@@ -262,6 +264,119 @@ void RulesEngine::scoreMove(const BoardLocation &location) const {
             ge->getCurrentPlayer()->setPlayerScore(ge->getCurrentPlayer()->getPlayerScore() + 6);
             std::cout << "QWIRKLE!!!" << std::endl;
         }
+
+    }
+
+    void RulesEngine::scoreMove(std::vector<BoardLocation > moves) {
+        
+
+       std::set<std::vector<Tile *>> horizontalLinesSet;
+        std::set<std::vector<Tile *>> verticalLineSet;
+        std::vector<Tile *> horizontaLine, verticalLine;
+        int score = 0;
+        
+        for (int i = 0 ; i < moves.size(); i ++)
+        {
+            horizontaLine = hasHorizontal(moves[i]);
+            verticalLine = hasVertical(moves[i]);
+
+            if (horizontaLine.size() >= 1)
+            {
+                horizontaLine.push_back(new Tile(moves[i].getTile().colour, moves[i].getTile().shape));
+            }
+            if (verticalLine.size() >= 1)
+            {
+                verticalLine.push_back(new Tile(moves[i].getTile().colour, moves[i].getTile().shape));
+            }
+
+            if (horizontalLinesSet.size() == 0)
+            {
+                horizontalLinesSet.insert(horizontaLine);
+            }
+            else if (horizontalLinesSet.size() > 0)
+            {
+                int num = 0;
+                for (auto elem : horizontalLinesSet)
+                {
+                    for (int i = 0; i < elem.size(); i++)
+                    {
+                        for (int j = 0; j < horizontaLine.size(); j++)
+                        {
+                            if (horizontaLine[j]->colour == elem[i]->colour && horizontaLine[j]->shape == elem[i]->shape)
+                            {
+                                num++;
+                            }
+                        }
+                    }
+                    if (num != elem.size())
+                    {
+                        horizontalLinesSet.insert(horizontaLine);
+
+                    }
+                    num = 0;
+                }
+            }
+
+            if (verticalLineSet.size() == 0)
+            {
+                verticalLineSet.insert(verticalLine);
+            }
+            else if (verticalLineSet.size() > 0)
+            {
+                int num = 0;
+                for (auto elem : verticalLineSet)
+                {
+                    for (int i = 0; i < elem.size(); i++)
+                    {
+                        for (int j = 0; j < verticalLine.size(); j++)
+                        {
+                            if (verticalLine[j]->colour == elem[i]->colour && verticalLine[j]->shape == elem[i]->shape)
+                            {
+                                num++;
+                            }
+                        }
+                    }
+                    if (num != elem.size())
+                    {
+                        verticalLineSet.insert(verticalLine);
+
+                    }
+                    num = 0;
+                }
+            }
+
+            std::cout << " H Set size" << horizontalLinesSet.size() << std::endl;
+            std::cout << " V Set size" << verticalLineSet.size() << std::endl;
+            int currScore = 0;
+            for (auto elem : verticalLineSet)
+            {
+                std::cout << " new " << std::endl;
+                
+                currScore += elem.size();
+                for (int i = 0; i < elem.size(); i++)
+                {
+                    std::cout << elem[i]->colour << elem[i]->shape << std::endl;
+
+                }
+            }
+
+            for (auto elem : horizontalLinesSet)
+            {
+                std::cout << " new H" << std::endl;
+                
+                currScore += elem.size();
+                for (int i = 0; i < elem.size(); i++)
+                {
+                    std::cout << elem[i]->colour << elem[i]->shape << std::endl;
+
+                }
+            }
+            score = currScore;
+            std::cout << "Score " << score << std::endl;
+        }
+
+        ge->getCurrentPlayer()->setPlayerScore(
+            ge->getCurrentPlayer()->getPlayerScore() + score);
 
     }
 

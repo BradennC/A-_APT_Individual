@@ -139,6 +139,7 @@ public:
     std::vector<Tile *> hasHorizontal(const BoardLocation &location) const;
 
     void scoreMove(const BoardLocation &location) const;
+    void scoreMove(std::vector<BoardLocation >);
 
     private:
     // Pointer to the games engine

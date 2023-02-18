@@ -355,7 +355,9 @@ void GamesEngine::playerTurn(Player* activePlayer){
 
                         if(validTile && index <= 5)
                         {
+                            std::vector<BoardLocation *> moves;
                             BoardLocation& move = convertStringToMove(stringInputForMove);
+                            
 
                             // Process the move and check if it is valid
                             if (re->isValidMove(move) || this->moveNumber == 0) 
@@ -504,11 +506,11 @@ void GamesEngine::playerTurn(Player* activePlayer){
                     {
                         int numOfTilesPlaced = (commandWords.size() - 2) / 2;
                         std::cout << numOfTilesPlaced << std::endl;
-
+                        std::vector<BoardLocation > moves;
 
                         for (int i = 1; i <= numOfTilesPlaced; i++)
                         {
-
+                            
                             std::cout << "Start loop" << std::endl;
                             std::string convTileString = commandWords[0] + " " + commandWords[i];
                             std::cout << convTileString << std::endl;
@@ -525,6 +527,8 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                     std::string boardLocString = commandWords[0] + " " + commandWords[tilePos] + " " + commandWords[numOfTilesPlaced + 1] + " " + commandWords[boardLocPos];
                                     std::cout << boardLocString << std::endl;
                                     BoardLocation& move = convertStringToMove(boardLocString);
+                                    moves.push_back(move);
+                                    
 
 
                                     // Process the move and check if it is valid
@@ -535,10 +539,14 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                             this->activePlayer->setPlayerScore(1);
                                         }
 
-                                        re->scoreMove(move);
+                                        
                                         //apply to move - and track the relevant point increases
                                         re->applyMove(move, this->activePlayer);
                                         std::cout << "Move applied" << std::endl;
+                                        if (i == numOfTilesPlaced)
+                                        {
+                                            re->scoreMove(moves);
+                                        }
                                     }
                                     
                                 

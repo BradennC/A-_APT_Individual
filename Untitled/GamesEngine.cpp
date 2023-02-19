@@ -498,38 +498,46 @@ void GamesEngine::playerTurn(Player* activePlayer){
                         }
                     }
                     }
-
+                    
+                    //Bool variables to track if moves are in same row or same col
                     bool sameRow = true;
                     bool sameCol = true;
+
+                    //2 loops to check each move against other moves to find if same col or same row
                     for (int i = atPos + 1; i < commandWords.size(); i ++)
                     {
                         for (int k = atPos + 1; k < commandWords.size(); k++)
                         {
+                            //Creatig string and move for i loop move
                             std::string multiMoveInput = commandWords[0] + " " + commandWords[1] + " "+ commandWords[2] + " " + commandWords[i];
                             BoardLocation bl1 = convertStringToMove(multiMoveInput);
+                            //Creating string and move gor k loop move
                             std::string multiMoveInput2 = commandWords[0] + " " + commandWords[1] + " "+ commandWords[2] + " " + commandWords[k];
                             BoardLocation bl2 = convertStringToMove(multiMoveInput2);
 
+                            //If cols font match set sameCol to false
                             if (bl1.getCol() != bl2.getCol())
                             {
                                 sameCol = false;
                             }
+                            //If rows dont match set sameRow to false
                             if (bl1.getRow() != bl2.getRow())
                             {
                                 sameRow = false;
                             }
-
-                            
                         }
                     }
 
+                    //Check if the tiles and board location are valid as well as either samecol or samerow is true
                     if (validTiles && validBoardLocations && (sameCol || sameRow))
                     {
+                        //int for num of tiles placed
                         int numOfTilesPlaced = (commandWords.size() - 2) / 2;
 
+                        //vector to store each move
                         std::vector<BoardLocation > moves;
 
-
+                        //Loop through each move
                         for (int i = 1; i <= numOfTilesPlaced; i++)
                         {
                             

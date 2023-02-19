@@ -500,13 +500,36 @@ void GamesEngine::playerTurn(Player* activePlayer){
                     }
                     }
 
-                    std::cout << validTiles << validBoardLocations << std::endl;
+                    bool sameRow = true;
+                    bool sameCol = true;
+                    for (int i = atPos + 1; i < commandWords.size(); i ++)
+                    {
+                        for (int k = atPos + 1; k < commandWords.size(); k++)
+                        {
+                            std::string multiMoveInput = commandWords[0] + " " + commandWords[1] + " "+ commandWords[2] + " " + commandWords[i];
+                            BoardLocation bl1 = convertStringToMove(multiMoveInput);
+                            std::string multiMoveInput2 = commandWords[0] + " " + commandWords[1] + " "+ commandWords[2] + " " + commandWords[k];
+                            BoardLocation bl2 = convertStringToMove(multiMoveInput2);
 
-                    if (validTiles && validBoardLocations)
+                            if (bl1.getCol() != bl2.getCol())
+                            {
+                                sameCol = false;
+                            }
+                            if (bl1.getRow() != bl2.getRow())
+                            {
+                                sameRow = false;
+                            }
+
+                            
+                        }
+                    }
+
+                    if (validTiles && validBoardLocations && (sameCol || sameRow))
                     {
                         int numOfTilesPlaced = (commandWords.size() - 2) / 2;
                         std::cout << numOfTilesPlaced << std::endl;
                         std::vector<BoardLocation > moves;
+
 
                         for (int i = 1; i <= numOfTilesPlaced; i++)
                         {

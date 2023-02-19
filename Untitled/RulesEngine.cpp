@@ -269,17 +269,24 @@ void RulesEngine::scoreMove(const BoardLocation &location) const {
 
     void RulesEngine::scoreMove(std::vector<BoardLocation > moves) {
         
-
-       std::set<std::vector<Tile *>> horizontalLinesSet;
+        //Create horizontal and vertical sets to hold set of line vecotrs
+        std::set<std::vector<Tile *>> horizontalLinesSet;
         std::set<std::vector<Tile *>> verticalLineSet;
+
+        //Create horizontal/vertical line vecotrs
         std::vector<Tile *> horizontaLine, verticalLine;
+
+        //Set score to 0 intitially
         int score = 0;
         
+        //Loop through each move made
         for (int i = 0 ; i < moves.size(); i ++)
         {
+            //Check if move has horizontal/vertical lines
             horizontaLine = hasHorizontal(moves[i]);
             verticalLine = hasVertical(moves[i]);
 
+            //if the lines size of either is > 1 push the tile to the line
             if (horizontaLine.size() >= 1)
             {
                 horizontaLine.push_back(new Tile(moves[i].getTile().colour, moves[i].getTile().shape));
@@ -289,75 +296,102 @@ void RulesEngine::scoreMove(const BoardLocation &location) const {
                 verticalLine.push_back(new Tile(moves[i].getTile().colour, moves[i].getTile().shape));
             }
 
+            //If horizontal line set == 0 add horizontal line to set
             if (horizontalLinesSet.size() == 0)
             {
                 horizontalLinesSet.insert(horizontaLine);
             }
+            //If else check
             else if (horizontalLinesSet.size() > 0)
             {
+                //num to track num of matches
                 int num = 0;
+
+                //for each element in horizontal set
                 for (auto elem : horizontalLinesSet)
                 {
+                    //2 for loops to check values of horizontalLine against the element from horizontalSet
                     for (int i = 0; i < elem.size(); i++)
                     {
                         for (int j = 0; j < horizontaLine.size(); j++)
                         {
+                            //if an element of the horizontal line set mathces the one from element increase the num by 1
                             if (horizontaLine[j]->colour == elem[i]->colour && horizontaLine[j]->shape == elem[i]->shape)
                             {
                                 num++;
                             }
                         }
                     }
+                    //If the num is not the element size add horizontal line to the set. If the num is the same the vector will contain the same values
                     if (num != elem.size())
                     {
                         horizontalLinesSet.insert(horizontaLine);
 
                     }
+                    //reset num for next loop
                     num = 0;
                 }
             }
 
+            //Check vertical set is 0 and add verticalLine vecotr to set
             if (verticalLineSet.size() == 0)
             {
                 verticalLineSet.insert(verticalLine);
             }
+
+            //If vertLineSet > 0 
             else if (verticalLineSet.size() > 0)
             {
+                //Num to track matches 
                 int num = 0;
+
+                //Loop through each element in thte vertical set
                 for (auto elem : verticalLineSet)
                 {
+                    //2for loops to compare values from 2 vecotrs
                     for (int i = 0; i < elem.size(); i++)
                     {
                         for (int j = 0; j < verticalLine.size(); j++)
                         {
+                            //If a tile matches increase the num
                             if (verticalLine[j]->colour == elem[i]->colour && verticalLine[j]->shape == elem[i]->shape)
                             {
                                 num++;
                             }
                         }
                     }
+                    //if num is not the sam eas the slements size add verticalLine to vertical set
                     if (num != elem.size())
                     {
                         verticalLineSet.insert(verticalLine);
 
                     }
+                    //reset num for next loop
                     num = 0;
                 }
             }
-
+            //track curr score
             int currScore = 0;
+
+            //Loop through elements in vertical line set
             for (auto elem : verticalLineSet)
             {   
+                //add the size of each element to the current score
                 currScore += elem.size();
             }
 
+            //Loop though elements in horizontal line set
             for (auto elem : horizontalLinesSet)
             {   
+                //add the size of each element to the crrent score
                 currScore += elem.size();
             }
+
+            //set the score to the currnet score
             score = currScore;
         }
 
+        //update players score to add the score from move
         ge->getCurrentPlayer()->setPlayerScore(
             ge->getCurrentPlayer()->getPlayerScore() + score);
 

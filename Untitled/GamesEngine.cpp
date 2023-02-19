@@ -392,7 +392,6 @@ void GamesEngine::playerTurn(Player* activePlayer){
             //If multiplace command
             if(commandWords.size() >= 6 && commandWords.size() <= 14)
             {
-                std::cout << "Multiplace" << std::endl;
 
                 int atPos = (commandWords.size() / 2);
 
@@ -527,18 +526,18 @@ void GamesEngine::playerTurn(Player* activePlayer){
                     if (validTiles && validBoardLocations && (sameCol || sameRow))
                     {
                         int numOfTilesPlaced = (commandWords.size() - 2) / 2;
-                        std::cout << numOfTilesPlaced << std::endl;
+
                         std::vector<BoardLocation > moves;
 
 
                         for (int i = 1; i <= numOfTilesPlaced; i++)
                         {
                             
-                            std::cout << "Start loop" << std::endl;
+                            
                             std::string convTileString = commandWords[0] + " " + commandWords[i];
-                            std::cout << convTileString << std::endl;
+                            
                             Tile* tile = convertStringToTile(convTileString);
-                            std::cout << tile->colour << tile->shape << std::endl;
+                            
                             int index = this->activePlayer->getPlayerHand()->getIndex(tile);
 
 
@@ -548,7 +547,7 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                     int tilePos = i;
                                     int boardLocPos = (numOfTilesPlaced + 1) + i;
                                     std::string boardLocString = commandWords[0] + " " + commandWords[tilePos] + " " + commandWords[numOfTilesPlaced + 1] + " " + commandWords[boardLocPos];
-                                    std::cout << boardLocString << std::endl;
+                                    
                                     BoardLocation& move = convertStringToMove(boardLocString);
                                     moves.push_back(move);
                                     
@@ -557,7 +556,6 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                     // Process the move and check if it is valid
                                     if (re->isValidMove(move) || this->moveNumber == 0) 
                                     {
-                                        std::cout << "Insides is valid mve" << std::endl;
                                         if (moveNumber == 0 && this->activePlayer->getPlayerScore() == 0){
                                             this->activePlayer->setPlayerScore(1);
                                         }
@@ -565,7 +563,7 @@ void GamesEngine::playerTurn(Player* activePlayer){
                                         
                                         //apply to move - and track the relevant point increases
                                         re->applyMove(move, this->activePlayer);
-                                        std::cout << "Move applied" << std::endl;
+                                        
                                         if (i == numOfTilesPlaced)
                                         {
                                             re->scoreMove(moves);

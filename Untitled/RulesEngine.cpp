@@ -345,34 +345,17 @@ void RulesEngine::scoreMove(const BoardLocation &location) const {
                 }
             }
 
-            std::cout << " H Set size" << horizontalLinesSet.size() << std::endl;
-            std::cout << " V Set size" << verticalLineSet.size() << std::endl;
             int currScore = 0;
             for (auto elem : verticalLineSet)
-            {
-                std::cout << " new " << std::endl;
-                
+            {   
                 currScore += elem.size();
-                for (int i = 0; i < elem.size(); i++)
-                {
-                    std::cout << elem[i]->colour << elem[i]->shape << std::endl;
-
-                }
             }
 
             for (auto elem : horizontalLinesSet)
-            {
-                std::cout << " new H" << std::endl;
-                
+            {   
                 currScore += elem.size();
-                for (int i = 0; i < elem.size(); i++)
-                {
-                    std::cout << elem[i]->colour << elem[i]->shape << std::endl;
-
-                }
             }
             score = currScore;
-            std::cout << "Score " << score << std::endl;
         }
 
         ge->getCurrentPlayer()->setPlayerScore(
